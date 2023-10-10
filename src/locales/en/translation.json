@@ -1,1 +1,27 @@
-{}
+{
+  "system": {
+    "error": {
+      "unauthorized": "UnAuthorizedError user token is invalid."
+    }
+  },
+  "user": {
+    "message": {
+      "create_user_success": "Create new user success.",
+      "update_user_success": "Update user success.",
+      "delete_user_success": "Delete user success."
+    },
+    "error": {
+      "user_not_found": "User not found."
+    }
+  },
+  "member": {
+    "message": {
+      "sign_up_success": "Sign up success, please activate status.",
+      "update_member_success": "Update member success."
+    },
+    "error": {
+      "status_should_active": "Please activate account status.",
+      "user_not_found": "Member not found."
+    }
+  }
+}

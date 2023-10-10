@@ -4,22 +4,31 @@ import Router from "koa-router";
 import bodyParser from "koa-bodyparser";
 import cors from "koa-cors";
 import logger from "koa-logger";
+import session from "koa-session";
 import fs from "fs";
 import { Container } from "typedi";
 import {
   useContainer,
   useKoaServer,
   getMetadataArgsStorage,
+  Action,
 } from "routing-controllers";
 import { routingControllersToSpec } from "routing-controllers-openapi";
+import { config } from "dotenv";
 
 import { AppDataSource } from "./database/mysql/AppDataSource";
 import { UserController } from "./controllers/UserController";
+import { SeedController } from "./controllers/SeedController";
+import { IUser } from "./entities/User";
+import { MemberController } from "./controllers/MemberController";
 
+config();
 useContainer(Container);
 
 const app = new Koa();
 const router = new Router();
+
+app.keys = [`${process.env.JWT_SECRET}`];
 
 app.use(bodyParser());
 app.use(cors());
@@ -28,11 +37,14 @@ app.use(logger());
 AppDataSource.initialize()
   .then(async () => {
     useKoaServer(app, {
-      controllers: [UserController],
+      controllers: [UserController, SeedController, MemberController],
+      currentUserChecker: async (action: Action) => {
+        return action.context.state.user as IUser;
+      },
     });
 
     const spec = routingControllersToSpec(getMetadataArgsStorage(), {
-      controllers: [UserController],
+      controllers: [UserController, SeedController, MemberController],
     });
 
     router.get("/", async (ctx) => {
@@ -49,6 +61,7 @@ AppDataSource.initialize()
       ctx.body = "Hello, Koa API!";
     });
 
+    app.use(session({}, app));
     app.use(router.routes());
     app.use(router.allowedMethods());
 
@@ -63,8 +76,8 @@ AppDataSource.initialize()
         backend: {
           loadPath: `${__dirname}/locales/{{lng}}/{{ns}}.json`,
         },
-        fallbackLng: 'th', // Default language
-        preload: ['th', 'en'],
+        fallbackLng: "th", // Default language
+        preload: ["th", "en"],
         debug: false, // Set to true for debugging
         interpolation: {
           escapeValue: false, // Disable escaping for HTML tags

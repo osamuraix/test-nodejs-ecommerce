@@ -1,1 +1,27 @@
-{}
+{
+  "system": {
+    "error": {
+      "unauthorized": "Token ไม่ถูกต้องหรือไม่ได้รับอนุญาต"
+    }
+  },
+  "user": {
+    "message": {
+      "create_user_success": "เพิ่มผู้ใช้งานใหม่สำเร็จ",
+      "update_user_success": "แก้ไขผู้ใช้งานสำเร็จ",
+      "delete_user_success": "ลบผู้ใช้งานสำเร็จ"
+    },
+    "error": {
+      "user_not_found": "ไม่พบผู้ใช้งาน"
+    }
+  },
+  "member": {
+    "message": {
+      "sign_up_success": "ลงทะเบียนเรียบร้อย กรุณายืนยันสถานะ",
+      "update_member_success": "แก้ไขข้อมูลสมาชิกสำเร็จ."
+    },
+    "error": {
+      "status_should_active": "กรุณายืนยันสถานะสมาชิก",
+      "user_not_found": "ไม่พบข้อมูลสมาชิก"
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import { mock, mockReset } from "jest-mock-extended";
 import { UserRepository } from "../../repositories/UserRepository";
-import { UserDomain } from "./user.domain";
+import { UserDomain } from "./UserDomain";
 import { IUser, User } from "../../entities/User";
 
 describe("User domain", () => {
